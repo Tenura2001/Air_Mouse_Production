@@ -77,7 +77,7 @@ The ESP32 uses **gyro data** from the MPU6050 to move the cursor, buttons to con
 ## 📸 Images
 
 ### 🔧 Schematic Diagram  
-![Circuit Diagram](images/circuit.jpeg)
+![Circuit Diagram](image/circuit.jpeg)
 
 
 ---
