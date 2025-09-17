@@ -12,6 +12,7 @@
 */
 
 #include <BleMouse.h>
+#include <BleKeyboard.h>  
 #include <Adafruit_MPU6050.h>
 
 // === RGB LED pins ===
@@ -20,15 +21,17 @@
 #define B 4    // Blue LED -> Button pressed indicator
 
 // === Button pins ===
-#define UP_BTN   36   // Scroll up
-#define DOWN_BTN 39   // Scroll down
-#define LEFT_BTN 34   // Left click
-//#define RIGHT_BTN 32 // Right click (optional if needed)
+#define UP_BTN 33   // Scroll up
+#define DOWN_BTN 34   // Scroll down
+#define LEFT_BTN 13   // Left click
+#define RIGHT_BTN 27 // Right click (optional if needed)
 
 #define SPEED 10  // Mouse movement sensitivity
 
 Adafruit_MPU6050 mpu;
 BleMouse bleMouse;
+BleKeyboard bleKeyboard("ESP32_VOL_CONTROL", "ESP32", 100); // Bluetooth HID device name
+
 
 bool sleepMPU = true;   // Keep MPU sleeping until BLE connects
 bool status = true;     // To control initial LED blink
@@ -46,7 +49,7 @@ void setup() {
   pinMode(UP_BTN, INPUT_PULLUP);
   pinMode(DOWN_BTN, INPUT_PULLUP);
   pinMode(LEFT_BTN, INPUT_PULLUP);
-  // pinMode(RIGHT_BTN, INPUT_PULLUP); // enable if using right button
+  pinMode(RIGHT_BTN, INPUT_PULLUP); // enable if using right button
 
   // Start BLE mouse
   bleMouse.begin();
@@ -137,15 +140,16 @@ void mouseControls() {
     buttonPressed();
     delay(250);
   }
-  /*
+  
   else if (digitalRead(RIGHT_BTN) == LOW) {  // Right click
     bleMouse.click(MOUSE_RIGHT);
     buttonPressed();
     delay(250);
   }
-  */
+  
   else {
     // No button pressed -> Blue LED OFF
     digitalWrite(B, LOW);
   }
 }
+
