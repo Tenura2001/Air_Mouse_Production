@@ -8,11 +8,11 @@ Adafruit_MPU6050 mpu;
 #define SPEED 10   // Adjust mouse speed
 
 // Define button pins
-#define BTN_SELECT  19   // Mode switch button
-#define BTN1        17   // Action button 1
-#define BTN2        15   // Action button 2
-#define BTN3   18   
-#define BTN4   23   
+#define BTN_SELECT  18   // Mode switch button
+#define BTN1        36   // Action button 1
+#define BTN2        23   // Action button 2
+#define BTN3   34   
+#define BTN4   19   
 
 
 bool mouseMode = true;   // Start in mouse mode
@@ -34,6 +34,7 @@ void setup() {
   pinMode(BTN2, INPUT_PULLUP);
   pinMode(BTN3, INPUT_PULLUP);
   pinMode(BTN4, INPUT_PULLUP);
+  pinMode(2,OUTPUT);
 
   // MPU6050
   if (!mpu.begin()) {
@@ -52,6 +53,7 @@ void loop() {
     handleModeSwitch();
 
     if (mouseMode) {
+      digitalWrite(2,LOW);
       // ================= Mouse Mode =================
       sensors_event_t a, g, temp;
       mpu.getEvent(&a, &g, &temp);
@@ -83,23 +85,25 @@ void loop() {
         delay(200);
       }
     } else {
+      digitalWrite(2,HIGH);
+    
       // ================= Keyboard/Media Mode =================
-      if (digitalRead(BTN1) == LOW) {
+      if (digitalRead(BTN3) == LOW) {
         Keyboard.write(KEY_MEDIA_VOLUME_UP); // Volume up
         Serial.println("Volume Up");
         delay(200);
       }
-      if (digitalRead(BTN2) == LOW) {
+      if (digitalRead(BTN4) == LOW) {
         Keyboard.write(KEY_MEDIA_VOLUME_DOWN); // Volume down
         Serial.println("Volume Down");
         delay(200);
       }
-      if (digitalRead(BTN3) == LOW) {
+      if (digitalRead(BTN1) == LOW) {
         Keyboard.write(KEY_MEDIA_PLAY_PAUSE);
         Serial.println("Keyboard: Play/Pause");
         delay(300);
       }
-      if (digitalRead(BTN4) == LOW) {
+      if (digitalRead(BTN2) == LOW) {
         Keyboard.write(KEY_MEDIA_NEXT_TRACK);
         Serial.println("Keyboard: Next Track");
         delay(300);
