@@ -123,12 +123,12 @@ void handleModeSwitch() {
       buttonPressStart = millis();
       buttonHeld = true;
     } else {
-      if (millis() - buttonPressStart > 2000) {
+      
         mouseMode = !mouseMode;  // Toggle mode
         Serial.print("Mode changed to: ");
         Serial.println(mouseMode ? "MOUSE" : "KEYBOARD");
         delay(500); // prevent multiple toggles
-      }
+      
     }
   } else {
     buttonHeld = false;
